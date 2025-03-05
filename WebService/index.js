@@ -7,22 +7,30 @@ app.use(morgan('tiny'))
 app.use(express.json())
 
 let notes = [
-    {
+    { 
       id: 1,
-      content: "HTML is easy",
-      important: true
+      name: "Arto Hellas", 
+      number: "040-123456"
     },
-    {
+    { 
       id: 2,
-      content: "Browser can execute only JavaScript",
-      important: false
+      name: "Ada Lovelace", 
+      number: "39-44-5323523"
     },
-    {
+    { 
       id: 3,
-      content: "GET and POST are the most important methods of HTTP protocol",
-      important: true
+      name: "Dan Abramov", 
+      number: "12-43-234345"
+    },
+    { 
+      id: 4,
+      name: "Mary Poppendieck", 
+      number: "39-23-6423122"
     }
-  ]
+]
+
+
+
 
 app.get('/', (request, response) => {
     response.send('<h1>Hello world</h1>')
@@ -77,7 +85,7 @@ app.post('/api/notes', (request, response) =>{
 })
 
 
-const PORT = 3001
+const PORT = 3002
 app.listen(PORT, ()=>{
     console.log(`Server running on port ${PORT}`)
 })
