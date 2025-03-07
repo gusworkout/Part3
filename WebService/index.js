@@ -6,10 +6,10 @@ app.use(morgan('tiny'))
 
 app.use(express.json())
 
-let notes = [
+let persons = [
     { 
       id: 1,
-      name: "Arto Hellas", 
+      name: "Artos Hellas", 
       number: "040-123456"
     },
     { 
@@ -24,7 +24,7 @@ let notes = [
     },
     { 
       id: 4,
-      name: "Mary Poppendieck", 
+      name: "Marys Poppendieck", 
       number: "39-23-6423122"
     }
 ]
@@ -32,55 +32,67 @@ let notes = [
 
 
 
-app.get('/', (request, response) => {
-    response.send('<h1>Hello world</h1>')
+app.get('/info', (request, response) =>{
+  const numOfpersons = persons.length
+  const today = new Date(8.64e15).toString()
+
+  response.send(
+    `Phone has info for ${numOfpersons} people 
+    <p></p> 
+     ${today} `
+  )
 })
 
-app.get('/api/notes/:id', (request, response) =>{
-    const id = Number(request.params.id)
-    const note = notes.find(note=> note.id === id)
+app.get('/api/persons', (request, response) =>{
+  response.send(persons)
+})
 
-    if (note) {
-      response.json(note)
+app.get('/api/persons/:id', (request, response) =>{
+    const id = Number(request.params.id)
+    const person = persons.find(person=> person.id === id)
+
+    if (person) {
+      response.json(person)
     }else{
       response.status(404).end()
     }
 })
 
-app.delete('/api/notes/:id', (request, response) =>{
+app.delete('/api/persons/:id', (request, response) =>{
   const id = Number(request.params.id)
-  const note = notes.filter(note = note.id !== id)
-
+  const person = persons.filter(person => person.id !== id)
+  response.json(person)
   response.status(204).end()
 })
 
 const generateId =()=>{
-  const maxId = notes.length > 0
-? Math.max(...notes.map(n => n.id))
-:0
+  const maxId = persons.length > 0
+? Math.max(...persons.map(n => n.id)):0
 
-const note=request.body
-note.id = maxId + 1
+return maxId + 1
 
-notes= notes.concat(note)
 
 }
 
-app.post('/api/notes', (request, response) =>{
+app.post('/api/persons', (request, response) =>{
+  console.log("Body recibido:", request.body);
   const body = request.body
-  if (!body.content){
+
+  if (!body.name || !body.number){
     return response.status(400).json({
-      error: 'content missing'
+      error: 'name must be unique'
     })
   }
-  const note = {
-    content: body.content,
-    important: Boolean(body.important)|| false,
+
+  const person = {
+    name: body.name,
+    number: body.number,
     id:generateId(),
   }
-  notes= notes.concat(note)
 
-  response.json(note)
+  persons= persons.concat(person)
+
+  response.json(person)
 
 })
 
