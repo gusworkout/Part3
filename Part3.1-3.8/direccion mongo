@@ -1,6 +1,0 @@
-mongodb+srv://tavoaod:<db_password>@cluster0.8esnq.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0
-
-
-Usar mongodb con mongoose
-
-npm install mongoose

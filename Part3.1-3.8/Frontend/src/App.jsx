@@ -3,7 +3,7 @@ import Note from './components/Note'
 import noteService from './services/note'
 import Notification from './components/comments'
 
-const Footer = () =>{
+const Footer = () => {
   const footerStyle = {
     color: 'green',
     fontStyle: 'italic',
@@ -51,7 +51,7 @@ const App = () => {
     event.preventDefault()
 
 
-    const existingPerson = persons.find(person => person.number === newPhone);
+    const existingPerson = persons.find(person => person.name === newName);
 
     if (existingPerson) {
       if (window.confirm(`${newPhone} already exists. Do you want to replace it?`)) {
@@ -64,9 +64,9 @@ const App = () => {
           }).catch(setErrorMessage(
             `Person has already been removed from server`
           ),
-          setTimeout(() => {
-            setErrorMessage(null)
-          }, 5000))
+            setTimeout(() => {
+              setErrorMessage(null)
+            }, 5000))
       }
       return
     }
@@ -76,7 +76,7 @@ const App = () => {
       return
     }
 
-    
+
     const noteObject = {
       number: newPhone,
       name: newName,
@@ -109,7 +109,7 @@ const App = () => {
     ? persons
     : persons.filter(name => name.name.toLowerCase().includes(filter.toLowerCase()))
 
-    
+
   return (
     <div>
       <h1>Add Name</h1>
@@ -129,7 +129,7 @@ const App = () => {
       </button>
       <input value={filter} onChange={handleFilterChange} />
 
-      
+
       <ul>
         {notesToShow.map((a) => (
           <Note key={a.id}
@@ -138,8 +138,8 @@ const App = () => {
             toggleNumber={() => toggleImportanceOf(a.id)} />
         ))}
       </ul>
-        <Notification message={errorMessage}/>
-        <Footer />
+      <Notification message={errorMessage} />
+      <Footer />
     </div>
   )
 }

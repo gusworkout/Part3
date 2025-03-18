@@ -6,7 +6,7 @@
     "build:ui": "rm -rf dist && cd ../Frontend && npm run build && cp -r dist ../Backend",
     "deploy:full": "npm run build:ui && git add . && git commit -m uibuild && git push",
     "start": "node index.js",
-    "dev": "nodemon index.js",
+    "dev": "node --watch index.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "",
@@ -14,12 +14,14 @@
   "description": "",
   "dependencies": {
     "cors": "^2.8.5",
+    "dotenv": "^16.4.7",
     "express": "^4.21.2",
     "mongodb": "^6.14.2",
     "mongoose": "^8.12.1",
     "morgan": "^1.10.0"
   },
   "devDependencies": {
+    "@types/node": "^22.13.10",
     "nodemon": "^3.1.9"
   }
 }

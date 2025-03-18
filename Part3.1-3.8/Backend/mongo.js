@@ -1,3 +1,4 @@
+/*
 const mongoose = require('mongoose')
 
 if (process.argv.length < 3) {
@@ -50,7 +51,7 @@ if (!nameArg || !numberArg) {
 }
 
 
-/*
+
 HACER UNA BUSQUEDA ESPCIFICA
 Person.find({name: 'Anna Frank'}).then(persons => {
   result.forEach(persons => {
