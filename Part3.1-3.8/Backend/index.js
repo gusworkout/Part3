@@ -3,13 +3,31 @@ const app = express()
 var morgan = require('morgan')
 
 const cors = require('cors')
+const mongoose = require('mongoose')
 
 app.use(express.static('dist'))
 app.use(cors())
-
 app.use(morgan('tiny'))
-
 app.use(express.json())
+
+
+
+const password = process.argv[2]
+
+const url =
+    `mongodb+srv://tavoaod:yVg9NeCCrZuH0zIg@cluster0.8esnq.mongodb.net/?
+  retryWrites=true&w=majority&appName=Cluster0`
+
+mongoose.set('strictQuery', false)
+mongoose.connect(url)
+
+//Muestra como se guardan los datos en mongo y cuales se guardaran
+const PersonSchema = new mongoose.Schema({
+    name: String,
+    number: String,
+})
+
+const Person = mongoose.model('Person', PersonSchema)
 
 let persons = [
     { 
@@ -48,8 +66,10 @@ app.get('/info', (request, response) =>{
   )
 })
 
-app.get('/api/persons', (request, response) =>{
-  response.send(persons)
+app.get('/api/persons', (request, response) => {
+  Person.find({}).then(persons => {
+    response.json(persons)
+  })
 })
 
 app.get('/api/persons/:id', (request, response) =>{
