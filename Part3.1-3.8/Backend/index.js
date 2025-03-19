@@ -3,7 +3,10 @@ const express = require('express')
 const app = express()
 var morgan = require('morgan')
 const cors = require('cors')
+const errorHandler = require('./Middlewares/errorHandler');
 
+
+app.use(errorHandler);
 
 const Person = require('./models/note')
 
@@ -68,22 +71,19 @@ app.put('/api/persons/:id', (request, response, next) => {
 })
 
 
-app.post('/api/persons', (request, response) => {
+app.post('/api/persons', (request, response, next) => {
   const body = request.body
-
-  if (body.name === undefined) {
-    return response.status(400).json({ error: 'name missing' })
-  }
-
+  
   const persons = new Person({
     name: body.name,
     number: body.number,
     important: body.important || false,
   })
 
-  persons.save().then(savedPerson => {
-    response.json(savedPerson)
-  })
+  persons.save()
+  .then(savedPerson => {response
+  .json(savedPerson)})
+  .catch(error => next(error))
 })
 
 

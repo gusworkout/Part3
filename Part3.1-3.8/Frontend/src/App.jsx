@@ -61,12 +61,11 @@ const App = () => {
           .then(returnedPerson => {
             setPersons(persons.map(p => p.id !== existingPerson.id ? p : returnedPerson))
             setNewPhone('')
-          }).catch(setErrorMessage(
-            `Person has already been removed from server`
-          ),
+          }).catch(error => {
+            setErrorMessage(error.response?.data?.error || "An error occurred")
             setTimeout(() => {
               setErrorMessage(null)
-            }, 5000))
+            }, 5000)})
       }
       return
     }
@@ -95,7 +94,10 @@ const App = () => {
         setTimeout(() => {
           setErrorMessage(null)
         }, 5000)
-      }).catch(error => console.error('Error adding name', error))
+      }).catch(error => {
+        setErrorMessage(error.response?.data?.error || "An error occurred");
+        setTimeout(() => setErrorMessage(null), 5000);
+      })
 
   }
 

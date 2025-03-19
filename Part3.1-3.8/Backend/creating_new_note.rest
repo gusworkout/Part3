@@ -4,9 +4,10 @@ POST http://localhost:3002/api/persons HTTP/1.1
 content-type: application/json
 
 {
-    "name": "sample",
-    "number": "310 233 4302"
+  "name": "John Doe",
+  "number": "1-22334455"
 }
+
 
 ###
 GET http://localhost:3002/api/persons/ HTTP/1.1
